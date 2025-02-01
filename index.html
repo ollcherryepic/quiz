@@ -1,0 +1,83 @@
+<html>
+<head>
+    <title>Quiz System</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css">
+    <style>
+        .quiz-container {
+            margin-top: 50px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+        }
+    </style>
+</head>
+<body>
+    <div class="quiz-container">
+        <h2 class="text-center">Quiz System</h2>
+        <div id="question-container"></div>
+        <button id="next-btn" class="btn btn-primary mt-3">Next Question</button>
+    </div>
+
+    <script>
+        const questions = [
+            {
+                question: "What is the capital of France?",
+                answers: ["Berlin", "Madrid", "Paris", "Lisbon"],
+                correct: "Paris"
+            },
+            {
+                question: "Which planet is known as the Red Planet?",
+                answers: ["Earth", "Mars", "Jupiter", "Saturn"],
+                correct: "Mars"
+            },
+            {
+                question: "What is the largest ocean on Earth?",
+                answers: ["Atlantic Ocean", "Indian Ocean", "Arctic Ocean", "Pacific Ocean"],
+                correct: "Pacific Ocean"
+            }
+        ];
+
+        let currentQuestionIndex = 0;
+
+        function showQuestion() {
+            const questionContainer = document.getElementById('question-container');
+            questionContainer.innerHTML = ''; // Clear previous question
+
+            const questionElement = document.createElement('h5');
+            questionElement.textContent = questions[currentQuestionIndex].question;
+            questionContainer.appendChild(questionElement);
+
+            questions[currentQuestionIndex].answers.forEach(answer => {
+                const button = document.createElement('button');
+                button.textContent = answer;
+                button.className = 'btn btn-outline-secondary mt-2';
+                button.onclick = () => checkAnswer(answer);
+                questionContainer.appendChild(button);
+            });
+        }
+
+        function checkAnswer(selectedAnswer) {
+            const correctAnswer = questions[currentQuestionIndex].correct;
+            if (selectedAnswer === correctAnswer) {
+                alert('Correct!');
+            } else {
+                alert('Wrong! The correct answer was ' + correctAnswer);
+            }
+            currentQuestionIndex++;
+            if (currentQuestionIndex < questions.length) {
+                showQuestion();
+            } else {
+                alert('Quiz Completed!');
+            }
+        }
+
+        document.getElementById('next-btn').addEventListener('click', showQuestion);
+
+        // Start the quiz
+        showQuestion();
+    </script>
+</body>
+</html>
